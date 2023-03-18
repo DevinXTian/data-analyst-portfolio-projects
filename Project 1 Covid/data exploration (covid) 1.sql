@@ -96,6 +96,7 @@ FROM deaths;
 -- looking at countries with the highest death percentage compared to total population
 -- noticed that location included continents and extra categories such as high income
 -- realized the continents were not null and instead were empty strings
+-- tableau table 1
 SELECT location, population,
        -- Max(Cast(total_cases AS SIGNED))         AS TotalCases,
        Max(Cast(total_deaths AS SIGNED))        AS TotalDeaths,
@@ -107,6 +108,7 @@ HAVING location not in ('high income')
 ORDER  BY totaldeathpercentage DESC; 
 
 -- looking at deaths per continent
+-- tableau table 2
 select continent, Max(Cast(total_deaths AS SIGNED)) AS TotalDeaths
 from deaths
 WHERE  continent != ('')
@@ -139,6 +141,7 @@ order by 4 desc;
 
 -- looking at number of COVID cases on rolling basis and vaccinations for each country's population
 -- CREATED VIEW
+-- tableau table 3
 CREATE VIEW PercentPopulationWithCovid as
 WITH CovidCaseVsVac (location, date, new_cases, RollingNewCases, total_vaccinations, population)
 AS
@@ -217,9 +220,10 @@ GROUP BY vac.location;
 -- ORDER BY MAX(Cast(GDP_per_capita as Signed)) desc;
 
 -- looking at relationship between GDP and Excess Mortality and Percent Population Vaccinated)
+-- tableau table 4
 select *, VaccinatedPopulation/Population * 100 as PercentPopulationVaccinated
 from GDPVsMortality
-ORDER BY Cast(GDP_per_capita as float) desc;
+ORDER BY Cast(GDP_per_capita as signed) desc;
 
 
 
